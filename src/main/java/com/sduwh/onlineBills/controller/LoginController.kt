@@ -35,14 +35,17 @@ class LoginController {
         return userService.checkUname(uname)
     }
 
-    @RequestMapping("/regist", method = [RequestMethod.POST])
+    @RequestMapping("/register", method = [RequestMethod.POST])
     fun regist(@RequestParam("username") username: String,
-               @RequestParam("password") password: String): String{
+               @RequestParam("password") password: String): Map<String, Boolean>{
+        val result = HashMap<String, Boolean>()
         if (checkUname(username)) {
             userService.addUser(username, password)
-            return "TRUE"
+            result["register"] = true
+        }else {
+            result["register"] = false
         }
-        return "FALSE"
+        return result
     }
 
     @RequestMapping("/signout")

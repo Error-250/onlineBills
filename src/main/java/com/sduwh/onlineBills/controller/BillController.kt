@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController
 import java.text.SimpleDateFormat
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import kotlin.collections.ArrayList
 
 @RestController
 class BillController {

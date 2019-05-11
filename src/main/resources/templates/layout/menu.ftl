@@ -14,7 +14,7 @@
         </div>
         <div class="right menu">
             <#if Session.user??>
-                <a class="item">${Session.user.username}</a>
+                <a class="item" href="/viewUser">${Session.user.username}</a>
                 <a class="item" href="/signout">Sign out</a>
             <#else >
                 <a class="active blue item" onclick="$('.ui.modal').modal('show');">Sign in</a>

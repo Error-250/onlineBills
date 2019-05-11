@@ -1,7 +1,9 @@
 package com.sduwh.onlineBills.controller
 
+import com.sduwh.onlineBills.domain.Role
 import com.sduwh.onlineBills.domain.User
 import com.sduwh.onlineBills.service.BillService
+import com.sduwh.onlineBills.service.OnlineConfigService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,6 +16,9 @@ class ViewController {
     @Autowired
     private
     lateinit var billService: BillService
+
+    @Autowired
+    private lateinit var onlineConfigService: OnlineConfigService
 
     @RequestMapping("/")
     fun index(): String {
@@ -77,5 +82,20 @@ class ViewController {
         years = thisYear.downTo(thisYear - yearnums).asSequence().toList()
         httpServletRequest.setAttribute("years", years)
         return "summaryByComments"
+    }
+
+    @RequestMapping("/viewUser")
+    fun viewUser(httpServletRequest: HttpServletRequest): String {
+        return "user"
+    }
+
+    @RequestMapping("/config")
+    fun viewConfig(httpServletRequest: HttpServletRequest): String {
+        val user = httpServletRequest.getSession(true).getAttribute("user") as User
+        if (user.role == Role.Admin) {
+            httpServletRequest.setAttribute("configs", onlineConfigService.getConfigs())
+            return "config"
+        }
+        return "index"
     }
 }

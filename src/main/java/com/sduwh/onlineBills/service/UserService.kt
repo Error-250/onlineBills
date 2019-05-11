@@ -11,6 +11,8 @@ interface UserService {
     fun findOne(username: String): User
     fun findUserById(userId: Long): User
     fun addUser(username: String, password: String)
+    fun findUsers(username: String): List<User>
+    fun updatePassword(userId: Long, password: String)
 }
 
 class UserServiceImpl: UserService {
@@ -37,5 +39,13 @@ class UserServiceImpl: UserService {
 
     override fun addUser(username: String, password: String) {
         userMapper.insert(username, password)
+    }
+
+    override fun findUsers(username: String): List<User> {
+        return userMapper.findUsers(username)
+    }
+
+    override fun updatePassword(userId: Long, password: String) {
+        userMapper.update(userId, password)
     }
 }

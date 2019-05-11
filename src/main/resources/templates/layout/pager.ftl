@@ -91,7 +91,7 @@
             if(parseInt(tags[i].innerHTML) < 0)
                 tags[i].style.color = '#f00';
             else
-                tags[i].style.color = '#0f0';
+                tags[i].style.color = '#9dfca4';
         }
     }
 </script>

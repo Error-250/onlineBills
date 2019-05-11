@@ -14,7 +14,10 @@ interface BillMapper {
     fun findBillThisMonth(@Param("userId") userId: Long,
                           @Param("date") date: Date): List<Bill>
 
-    @Select("select year(now()) - min(year(date)) as yearNum from account_bills where account_id = #{userId}")
+    @Select("select case" +
+            " when min(year(date)) is null then 0" +
+            " else year(now()) - min(year(date)) end as yearNum" +
+            " from account_bills where account_id = #{userId}")
     fun findYearsById(@Param("userId") userId: Long): Int
 
     @Insert("insert into account_bills(account_id, money, info, date)" +
@@ -30,7 +33,7 @@ interface BillMapper {
             "select year(date) as date, sum(money) as money from account_bills " +
             "where account_id = #{userId} " +
             "<if test='option != 0'>and year(date) between year(now()) - 10 and year(now()) </if>" +
-            "group by year(date) order by date" +
+            " group by year(date) order by date" +
             "</script>")
     fun summaryYearly(@Param("userId") userId: Long,
                       @Param("option") option: Int): List<Map<String, Any>>
@@ -40,7 +43,8 @@ interface BillMapper {
             "where account_id = #{userId} " +
             "<if test='year != -1'>and year(date) = #{year}</if>" +
             "<if test='month != -1'>and month(date) = #{month}</if>" +
-            "group by info" +
+            " group by info" +
+            " order by money" +
             "</script>")
     fun summaryByComments(@Param("userId") userId: Long,
                           @Param("year") year: Int,
@@ -48,6 +52,6 @@ interface BillMapper {
 
     @Select("select info from account_bills " +
             "where account_id = #{userId}" +
-            " group by info order by count(id) desc limit 5")
+            " group by info order by count(id) desc limit 10")
     fun findBillTags(@Param("userId") userId: Long): List<String>
 }

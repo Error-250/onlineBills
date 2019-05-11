@@ -40,7 +40,6 @@
                         </div>
 
                         <div class="ui error message">${message!!}</div>
-
                     </form>
                 </div>
             </div>
@@ -52,12 +51,12 @@
             var password = $("#registPassword").val();
             var cPassword = $("#confirmPassword").val();
             if(password == cPassword) {
-                $.post("/login", {'username': username, 'password': password}, function (data) {
-                    if (data.login) {
+                $.post("/register", {'username': username, 'password': password}, function (data) {
+                    if (data.register) {
                         // 登陆成功
                         window.location = "/home";
                     } else {
-                        $(".ui.error.message").text("账号或密码错误!");
+                        $(".ui.error.message").text("注册失败...");
                         $(".ui.error.message").css({"display": "block"});
                     }
                 })
