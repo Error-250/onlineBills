@@ -44,7 +44,7 @@ interface BillMapper {
             "<if test='year != -1'>and year(date) = #{year}</if>" +
             "<if test='month != -1'>and month(date) = #{month}</if>" +
             " group by info" +
-            " order by money" +
+            " order by sum(money)" +
             "</script>")
     fun summaryByComments(@Param("userId") userId: Long,
                           @Param("year") year: Int,

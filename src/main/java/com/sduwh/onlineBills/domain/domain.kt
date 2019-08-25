@@ -24,16 +24,16 @@ data class Bill(
         val date: Date? = null
 )
 
-data class RestfulResponse (
+data class RestfulResponse(
         val success: Boolean,
         val message: String? = null,
         val data: Any? = null
 )
 
-data class Config (
-        val id:      Long?   = null,
-        val appKey:  String? = null,
-        val key:     String? = null,
-        val value:   String? = null,
+data class Config(
+        val id: Long? = null,
+        val appKey: String? = null,
+        val key: String? = null,
+        val value: String? = null,
         val comment: String? = null
 )
